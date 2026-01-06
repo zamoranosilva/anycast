@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Información sobre AnyCast</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      margin: 2rem auto;
+      max-width: 860px;
+      line-height: 1.6;
+      padding: 0 1rem;
+      color: #000000;
+    }
+    h1, h2 { text-align: center; }
+    .logo { display: block; margin: 0 auto 1rem; max-width: 200px; }
+    footer { font-size: 0.9rem; color: #666; margin-top: 2rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="anycast.png" alt="Logo AnyCast" class="logo" />
+    <h1>Información sobre AnyCast</h1>
+    <p style="text-align:center;">Tu herramienta de transmisión directa hacia Roku</p>
+  </header>
+
+  <section>
+    <h2>¿Qué es AnyCast?</h2>
+    <p>
+      AnyCast es una aplicación diseñada para Roku que permite enviar contenido desde cualquier dispositivo
+      (teléfono, computadora o tablet) directamente a tu televisor. No ofrece películas, series ni catálogos propios:
+      su función es ser un puente de transmisión, simple y seguro.
+    </p>
+  </section>
+
+  <section>
+    <h2>Cómo funciona para el usuario final</h2>
+    <ul>
+      <li>Descarga e instala el canal AnyCast en tu Roku.</li>
+      <li>Desde tu dispositivo, selecciona el contenido que quieras transmitir.</li>
+      <li>Envía el stream a Roku mediante la función de cast.</li>
+      <li>El contenido se reproduce en tu televisor, sin listas ni publicidad.</li>
+    </ul>
+    <p>
+      La experiencia es sencilla: eliges un video en tu dispositivo y lo ves en pantalla grande, sin interrupciones ni cobros.
+    </p>
+  </section>
+
+  <section>
+    <h2>Aspectos técnicos</h2>
+    <p>
+      AnyCast funciona como un receptor de transmisión dentro de Roku. El canal utiliza el 
+      <strong>External Control Protocol (ECP)</strong>, que es el mecanismo oficial de Roku para 
+      recibir comandos externos mediante llamadas HTTP. Esto permite que aplicaciones móviles, 
+      páginas web o cualquier dispositivo conectado en la misma red puedan enviar instrucciones 
+      directamente al canal.
+    </p>
+    <p>
+      El flujo técnico es el siguiente:
+    </p>
+    <ul>
+      <li>El canal abre un servidor interno en Roku que escucha peticiones HTTP en el puerto estándar (8060).</li>
+      <li>Los dispositivos clientes envían comandos ECP como <code>/launch</code> o <code>/input</code> para iniciar la reproducción.</li>
+      <li>Los parámetros enviados en la URL definen qué contenido reproducir y cómo hacerlo.</li>
+      <li>La reproducción ocurre en tiempo real, sin almacenamiento ni caché en Roku.</li>
+    </ul>
+    <p>
+      Para desarrolladores o usuarios avanzados:
+    </p>
+    <ul>
+      <li>Es posible integrar AnyCast en una aplicación móvil enviando solicitudes HTTP al Roku en la misma red local.</li>
+      <li>También puede hacerse desde una página web, siempre que tenga acceso a la red interna y pueda emitir llamadas HTTP hacia el dispositivo Roku.</li>
+      <li>No se requieren APIs externas ni servicios en la nube: toda la comunicación ocurre directamente entre el cliente y el Roku.</li>
+      <li>El protocolo ECP es simple y extensible, lo que facilita la integración con cualquier lenguaje o framework que soporte HTTP.</li>
+    </ul>
+    <p>
+      En resumen, AnyCast aprovecha la infraestructura de ECP y las llamadas HTTP para ofrecer 
+      una experiencia de transmisión simple, directa y segura. El usuario final solo ve que su 
+      contenido aparece en la pantalla grande, mientras que técnicamente se trata de un intercambio 
+      de comandos y datos entre su dispositivo y el Roku.
+    </p>
+  </section>
+
+  <section>
+    <h2>Características principales</h2>
+    <ul>
+      <li>Transmisión directa desde cualquier dispositivo compatible.</li>
+      <li>No ofrece ni vende contenido propio.</li>
+      <li>Sin publicidad, suscripciones ni costos ocultos.</li>
+      <li>Solo admite un stream a la vez, para mantener la simplicidad.</li>
+      <li>Compatible con múltiples formatos de video según soporte de Roku.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Última actualización: <time datetime="2026-01-06">6 de enero de 2026</time></p>
+    <p>© 2026 AnyCast – Canal de transmisión para Roku</p>
+  </footer>
+</body>
+</html>
