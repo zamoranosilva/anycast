@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnyCast para Samsung Smart TV</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f7f9;
+        }
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .app-logo {
+            display: block;
+            margin: 0 auto 20px auto;
+            max-width: 150px; /* Ajusta este tamaño según tu logo */
+            height: auto;
+        }
+        h1 { color: #0077ff; margin-bottom: 5px; }
+        .tagline { font-style: italic; color: #666; }
+        
+        .important-notice {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .disclaimer-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            color: #555;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.9em;
+            text-align: center;
+            color: #888;
+        }
+		
+		.code-container {
+			background-color: #1e1e1e; /* Fondo oscuro tipo VS Code */
+			color: #d4d4d4;           /* Texto gris claro */
+			padding: 20px;
+			border-radius: 8px;
+			margin: 20px 0;
+			position: relative;
+			box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+			border-left: 5px solid #0077ff; /* Acento azul */
+		}
+
+		pre {
+			margin: 0;
+			font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+			font-size: 14px;
+			line-height: 1.5;
+			overflow-x: auto; /* Scroll horizontal si el código es largo */
+		}
+
+		.comment { color: #6a9955; } /* Verde para comentarios */
+		.keyword { color: #569cd6; } /* Azul para palabras clave */
+		.string  { color: #ce9178; } /* Naranja para textos */
+		.function { color: #dcdcaa; } /* Amarillo para funciones */
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="anycast.png" alt="AnyCast Logo" class="app-logo">
+    </div>
+
+    <section>
+        <h2>Descripción de la Aplicación</h2>
+        <p>
+            <strong>AnyCast</strong> es una utilidad de infraestructura de red diseñada para actuar como receptor pasivo de señales de video. Su propósito principal es permitir la interoperabilidad técnica, permitiendo que un dispositivo emisor envíe parámetros de reproducción de forma directa a su Samsung Smart TV.
+        </p>
+    </section>
+
+    <div class="important-notice">
+        <strong>ACLARACIÓN DE SERVICIO:</strong><br>
+        Esta aplicación es una herramienta técnica "vacía". <strong>NO proporciona, NO aloja y NO facilita</strong> acceso a contenidos de video, servicios de streaming, listas de reproducción (M3U8) ni ningún tipo de suscripción multimedia.
+    </div>
+
+    <h3>Funcionalidades Técnicas:</h3>
+    <ul class="feature-list">
+        <li><strong>Gratuidad Total:</strong> Aplicación de libre acceso, sin costos ocultos.</li>
+        <li><strong>Arquitectura Privada:</strong> No requiere sistema de login, registro ni almacenamiento de datos de usuario.</li>
+        <li><strong>Protocolo WebSocket:</strong> Receptor de archivos de manifiesto (m3u8) mediante comunicación de socket web en tiempo real.</li>
+        <li><strong>Ejecución Efímera:</strong> La aplicación no almacena ni distribuye el contenido recibido tras finalizar la sesión de cast.</li>
+    </ul>
+	
+	<div class="tech-section">
+		<h3>Guía de Integración Técnica (STOMP Protocol)</h3>
+		<p>Para enviar contenido a AnyCast, utilice la url <span class="url-badge"><strong>https://ws.sp33dforc3.com/cast-wss</strong></span> con el endpoint <span class="url-badge"><strong>/inject-video</strong></span>, el siguiente es un ejemplo completo.</p>
+
+<div class="code-container">
+    <pre>
+<span class="keyword">&lt;!DOCTYPE</span> <span class="function">html</span><span class="keyword">&gt;</span>
+<span class="keyword">&lt;html</span> <span class="function">lang</span>=<span class="string">"es"</span><span class="keyword">&gt;</span>
+<span class="keyword">&lt;head&gt;</span>
+    <span class="keyword">&lt;meta</span> <span class="function">charset</span>=<span class="string">"UTF-8"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;title&gt;</span>AnyCast - Emisor<span class="keyword">&lt;/title&gt;</span>
+    <span class="keyword">&lt;script</span> <span class="function">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"</span><span class="keyword">&gt;&lt;/script&gt;</span>
+    <span class="keyword">&lt;script</span> <span class="function">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"</span><span class="keyword">&gt;&lt;/script&gt;</span>
+    <span class="keyword">&lt;style&gt;</span>
+        body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 50px; background: #f0f2f5; }
+        .card { background: white; padding: 30px; border-radius: 12px; shadow: 0 4px 15px rgba(0,0,0,0.1); width: 400px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0056b3; }
+        #status { font-size: 12px; color: #666; margin-bottom: 15px; }
+    <span class="keyword">&lt;/style&gt;</span>
+<span class="keyword">&lt;/head&gt;</span>
+<span class="keyword">&lt;body&gt;</span>
+
+<span class="keyword">&lt;div</span> <span class="function">class</span>=<span class="string">"card"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;h2&gt;</span>Control de Cast<span class="keyword">&lt;/h2&gt;</span>
+    <span class="keyword">&lt;div</span> <span class="function">id</span>=<span class="string">"status"</span><span class="keyword">&gt;</span>Conectando al servidor...<span class="keyword">&lt;/div&gt;</span>
+    
+    <span class="keyword">&lt;label&gt;</span>ID de la TV:<span class="keyword">&lt;/label&gt;</span>
+    <span class="keyword">&lt;input</span> <span class="function">type</span>=<span class="string">"text"</span> <span class="function">id</span>=<span class="string">"roomId"</span> <span class="function">placeholder</span>=<span class="string">"Ej: ABC-123"</span><span class="keyword">&gt;</span>
+    
+    <span class="keyword">&lt;label&gt;</span>URL del Video (.m3u8):<span class="keyword">&lt;/label&gt;</span>
+    <span class="keyword">&lt;input</span> <span class="function">type</span>=<span class="string">"text"</span> <span class="function">id</span>=<span class="string">"videoUrl"</span> <span class="function">value</span>=<span class="string">"https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"</span><span class="keyword">&gt;</span>
+    
+    <span class="keyword">&lt;button</span> <span class="function">onclick</span>=<span class="string">"enviarVideo()"</span><span class="keyword">&gt;</span>Inyectar Video<span class="keyword">&lt;/button&gt;</span>
+<span class="keyword">&lt;/div&gt;</span>
+
+<span class="keyword">&lt;script&gt;</span>
+    <span class="keyword">var</span> stompClient = <span class="keyword">null</span>;
+    <span class="keyword">var</span> socketUrl = <span class="string">'https://ws.sp33dforc3.com/cast-wss'</span>;
+
+    <span class="keyword">function</span> <span class="function">conectar</span>() {
+        <span class="keyword">var</span> socket = <span class="keyword">new</span> <span class="function">SockJS</span>(socketUrl);
+        stompClient = Stomp.<span class="function">over</span>(socket);
+
+        stompClient.<span class="function">connect</span>({}, <span class="keyword">function</span> (frame) {
+            document.<span class="function">getElementById</span>(<span class="string">'status'</span>).innerText = <span class="string">"● Conectado al servidor"</span>;
+            document.<span class="function">getElementById</span>(<span class="string">'status'</span>).style.color = <span class="string">"green"</span>;
+            console.<span class="function">log</span>(<span class="string">'Conectado: '</span> + frame);
+        }, <span class="keyword">function</span>(error) {
+            document.<span class="function">getElementById</span>(<span class="string">'status'</span>).innerText = <span class="string">"● Error de conexión"</span>;
+            document.<span class="function">getElementById</span>(<span class="string">'status'</span>).style.color = <span class="string">"red"</span>;
+        });
+    }
+
+    <span class="keyword">function</span> <span class="function">enviarVideo</span>() {
+        <span class="keyword">var</span> roomId = document.<span class="function">getElementById</span>(<span class="string">'roomId'</span>).value;
+        <span class="keyword">var</span> videoUrl = document.<span class="function">getElementById</span>(<span class="string">'videoUrl'</span>).value;
+        <span class="keyword">var</span> videoTitle = <span class="string">"Tears Of Steel"</span>;
+
+        <span class="keyword">if</span> (!roomId || !videoUrl) {
+            <span class="function">alert</span>(<span class="string">"Por favor llena ambos campos"</span>);
+            <span class="keyword">return</span>;
+        }
+
+        <span class="keyword">var</span> payload = {
+            roomId: roomId,
+            url: videoUrl,
+            title: videoTitle
+        };
+
+        stompClient.<span class="function">send</span>(<span class="string">"/app/inject-video"</span>, {}, JSON.<span class="function">stringify</span>(payload));
+        console.<span class="function">log</span>(<span class="string">"Mensaje enviado a sala: "</span> + roomId);
+    }
+
+    <span class="function">conectar</span>();
+<span class="keyword">&lt;/script&gt;</span>
+
+<span class="keyword">&lt;/body&gt;</span>
+<span class="keyword">&lt;/html&gt;</span></pre>
+</div>
+
+	</div>
+
+    <div class="disclaimer-box">
+        <strong>DESCARGO DE RESPONSABILIDAD:</strong><br>
+        AnyCast funciona exclusivamente como una herramienta de transferencia de datos iniciada por el usuario. El desarrollador de AnyCast <strong>no se responsabiliza, ni ejerce control alguno, sobre el origen, la legalidad o la naturaleza del contenido</strong> enviado o reproducido a través de esta aplicación. Es responsabilidad única y exclusiva del usuario final asegurarse de poseer los derechos legales para transmitir o visualizar cualquier material enviado mediante esta herramienta.
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 AnyCast Tool</p>
+    </div>
+</div>
+
+</body>
+</html>
